@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fafafa;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.topbar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.feed {
+    max-width: 470px;
+    margin: 20px auto;
+}
+
+.post {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.post img {
+    width: 100%;
+    display: block;
+}
+
+.post-info {
+    padding: 12px;
+}
+
+.post-info h3 {
+    margin: 0 0 4px;
+}
+
+.post-info a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.product {
+    max-width: 470px;
+    margin: 20px auto;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.product img {
+    width: 100%;
+    display: block;
+}
+
+.product-info {
+    padding: 16px;
+}
+
+.product-info label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+.product-info select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.message {
+    color: #c00;
+    min-height: 20px;
+}
+
+#add-btn {
+    width: 100%;
+    padding: 12px;
+    background: #222;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
