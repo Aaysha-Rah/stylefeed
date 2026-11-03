@@ -60,6 +60,94 @@ function showProduct() {
         '<button id="add-btn">Add to Cart</button>' +
         '</div>';
 }
+function setupAddToCart() {
+    const button = document.getElementById("add-btn");
+    if (!button) return;
 
+    button.addEventListener("click", function () {
+        const size = document.getElementById("size").value;
+        const color = document.getElementById("color").value;
+        const message = document.getElementById("message");
+
+        if (size === "" || color === "") {
+            message.style.color = "#c00";
+            message.textContent = "Please choose a size and a color before adding to cart.";
+            return;
+        }
+
+        message.style.color = "#080";
+        message.textContent = "Selected size " + size + " and color " + color + ".";
+    });
+}
+
+function setupAddToCart() {
+    function getCart() {
+        const saved = localStorage.getItem("cart");
+        return saved ? JSON.parse(saved) : [];
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function setupAddToCart() {
+        const button = document.getElementById("add-btn");
+        if (!button) return;
+
+        const id = Number(new URLSearchParams(window.location.search).get("id"));
+        const product = products.find(function (p) { return p.id === id; });
+
+        button.addEventListener("click", function () {
+            const size = document.getElementById("size").value;
+            const color = document.getElementById("color").value;
+            const message = document.getElementById("message");
+
+            if (size === "" || color === "") {
+                message.style.color = "#c00";
+                message.textContent = "Please choose a size and a color before adding to cart.";
+                return;
+            }
+
+            const cart = getCart();
+
+            let inCart = 0;
+            cart.forEach(function (item) {
+                if (item.id === product.id) {
+                    inCart += item.quantity;
+                }
+            });
+
+            if (inCart + 1 > product.stock) {
+                message.style.color = "#c00";
+                message.textContent = "Sorry, only " + product.stock + " in stock. You already have " + inCart + " in your cart.";
+                return;
+            }
+
+            const existing = cart.find(function (item) {
+                return item.id === product.id && item.size === size && item.color === color;
+            });
+
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    size: size,
+                    color: color,
+                    quantity: 1
+                });
+            }
+
+            saveCart(cart);
+            message.style.color = "#080";
+            message.textContent = "Added to cart!";
+        });
+    }
+}
 showFeed();
 showProduct();
+setupAddToCart();
+
