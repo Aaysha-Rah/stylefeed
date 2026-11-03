@@ -1,11 +1,20 @@
 const products = [
-    { id: 1, name: "Denim Jacket", price: 45, image: "https://picsum.photos/seed/jacket/470/470", description: "Classic denim jacket.", sizes: ["S", "M", "L"], colors: ["Blue", "Black"], stock: 5 },
-    { id: 2, name: "White Sneakers", price: 60, image: "https://picsum.photos/seed/sneakers/470/470", description: "Clean everyday sneakers.", sizes: ["7", "8", "9", "10"], colors: ["White"], stock: 8 },
-    { id: 3, name: "Floral Dress", price: 38, image: "https://picsum.photos/seed/dress/470/470", description: "Light summer dress.", sizes: ["XS", "S", "M"], colors: ["Pink", "Yellow"], stock: 3 },
-    { id: 4, name: "Graphic Tee", price: 20, image: "https://picsum.photos/seed/tee/470/470", description: "Soft cotton tee.", sizes: ["S", "M", "L", "XL"], colors: ["Black", "Gray"], stock: 10 },
-    { id: 5, name: "Cargo Pants", price: 42, image: "https://picsum.photos/seed/pants/470/470", description: "Relaxed fit cargo pants.", sizes: ["M", "L"], colors: ["Green", "Tan"], stock: 4 },
-    { id: 6, name: "Knit Sweater", price: 35, image: "https://picsum.photos/seed/sweater/470/470", description: "Warm knit sweater.", sizes: ["S", "M", "L"], colors: ["Cream", "Navy"], stock: 6 }
+    { id: 1, name: "Denim Jacket", price: 45, image: "images/denim jacket.webp", description: "Classic denim jacket.", sizes: ["S", "M", "L"], colors: ["Blue", "Black"], stock: 5 },
+    { id: 2, name: "White Sneakers", price: 60, image: "images/sneakers.jpeg", description: "Clean everyday sneakers.", sizes: ["7", "8", "9", "10"], colors: ["White"], stock: 8 },
+    { id: 3, name: "Floral Dress", price: 38, image: "images/floral dress.jpeg", description: "Light summer dress.", sizes: ["XS", "S", "M"], colors: ["Pink", "Yellow"], stock: 3 },
+    { id: 4, name: "Graphic Tee", price: 20, image: "images/tee.jpeg", description: "Soft cotton tee.", sizes: ["S", "M", "L", "XL"], colors: ["Black", "Gray"], stock: 10 },
+    { id: 5, name: "Cargo Pants", price: 42, image: "images/cargo.jpeg", description: "Relaxed fit cargo pants.", sizes: ["M", "L"], colors: ["Green", "Tan"], stock: 4 },
+    { id: 6, name: "Knit Sweater", price: 35, image: "images/sweater.jpeg", description: "Warm knit sweater.", sizes: ["S", "M", "L"], colors: ["Cream", "Navy"], stock: 6 }
 ];
+
+function getCart() {
+    const saved = localStorage.getItem("cart");
+    return saved ? JSON.parse(saved) : [];
+}
+
+function saveCart(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
 
 function showFeed() {
     const feed = document.getElementById("feed");
@@ -60,9 +69,13 @@ function showProduct() {
         '<button id="add-btn">Add to Cart</button>' +
         '</div>';
 }
+
 function setupAddToCart() {
     const button = document.getElementById("add-btn");
     if (!button) return;
+
+    const id = Number(new URLSearchParams(window.location.search).get("id"));
+    const product = products.find(function (p) { return p.id === id; });
 
     button.addEventListener("click", function () {
         const size = document.getElementById("size").value;
@@ -75,79 +88,88 @@ function setupAddToCart() {
             return;
         }
 
+        const cart = getCart();
+
+        let inCart = 0;
+        cart.forEach(function (item) {
+            if (item.id === product.id) {
+                inCart += item.quantity;
+            }
+        });
+
+        if (inCart + 1 > product.stock) {
+            message.style.color = "#c00";
+            message.textContent = "Sorry, only " + product.stock + " in stock. You already have " + inCart + " in your cart.";
+            return;
+        }
+
+        const existing = cart.find(function (item) {
+            return item.id === product.id && item.size === size && item.color === color;
+        });
+
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            cart.push({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                image: product.image,
+                size: size,
+                color: color,
+                quantity: 1
+            });
+        }
+
+        saveCart(cart);
         message.style.color = "#080";
-        message.textContent = "Selected size " + size + " and color " + color + ".";
+        message.textContent = "Added to cart!";
     });
 }
 
-function setupAddToCart() {
-    function getCart() {
-        const saved = localStorage.getItem("cart");
-        return saved ? JSON.parse(saved) : [];
+function showCart() {
+    const container = document.getElementById("cart");
+    if (!container) return;
+
+    const cart = getCart();
+
+    if (cart.length === 0) {
+        container.innerHTML = "<h2>Your Cart</h2><p>Your cart is empty.</p>";
+        return;
     }
 
-    function saveCart(cart) {
-        localStorage.setItem("cart", JSON.stringify(cart));
-    }
+    let total = 0;
+    let html = "<h2>Your Cart</h2>";
 
-    function setupAddToCart() {
-        const button = document.getElementById("add-btn");
-        if (!button) return;
+    cart.forEach(function (item, index) {
+        const lineTotal = item.price * item.quantity;
+        total += lineTotal;
+        html +=
+            '<div class="cart-item">' +
+            '<img src="' + item.image + '" alt="' + item.name + '">' +
+            '<div class="cart-details">' +
+            '<h3>' + item.name + '</h3>' +
+            '<p>Size: ' + item.size + ' | Color: ' + item.color + '</p>' +
+            '<p>$' + item.price + ' x ' + item.quantity + ' = $' + lineTotal + '</p>' +
+            '<button class="remove-btn" data-index="' + index + '">Remove</button>' +
+            '</div>' +
+            '</div>';
+    });
 
-        const id = Number(new URLSearchParams(window.location.search).get("id"));
-        const product = products.find(function (p) { return p.id === id; });
+    html += '<h3 class="cart-total">Total: $' + total + '</h3>';
+    container.innerHTML = html;
 
-        button.addEventListener("click", function () {
-            const size = document.getElementById("size").value;
-            const color = document.getElementById("color").value;
-            const message = document.getElementById("message");
-
-            if (size === "" || color === "") {
-                message.style.color = "#c00";
-                message.textContent = "Please choose a size and a color before adding to cart.";
-                return;
-            }
-
-            const cart = getCart();
-
-            let inCart = 0;
-            cart.forEach(function (item) {
-                if (item.id === product.id) {
-                    inCart += item.quantity;
-                }
-            });
-
-            if (inCart + 1 > product.stock) {
-                message.style.color = "#c00";
-                message.textContent = "Sorry, only " + product.stock + " in stock. You already have " + inCart + " in your cart.";
-                return;
-            }
-
-            const existing = cart.find(function (item) {
-                return item.id === product.id && item.size === size && item.color === color;
-            });
-
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    image: product.image,
-                    size: size,
-                    color: color,
-                    quantity: 1
-                });
-            }
-
-            saveCart(cart);
-            message.style.color = "#080";
-            message.textContent = "Added to cart!";
+    document.querySelectorAll(".remove-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            const current = getCart();
+            current.splice(Number(btn.dataset.index), 1);
+            saveCart(current);
+            showCart();
         });
-    }
+    });
 }
+
 showFeed();
 showProduct();
 setupAddToCart();
-
+showCart();

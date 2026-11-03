@@ -36,6 +36,11 @@ body {
     overflow: hidden;
 }
 
+.post a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .post img {
     width: 100%;
     display: block;
@@ -47,11 +52,6 @@ body {
 
 .post-info h3 {
     margin: 0 0 4px;
-}
-
-.post-info a {
-    text-decoration: none;
-    color: inherit;
 }
 
 .product {
@@ -103,4 +103,46 @@ body {
     border-radius: 6px;
     font-size: 16px;
     cursor: pointer;
+}
+
+.cart {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 0 16px;
+}
+
+.cart-item {
+    display: flex;
+    gap: 16px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.cart-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.cart-details h3 {
+    margin: 0 0 6px;
+}
+
+.cart-details p {
+    margin: 4px 0;
+}
+
+.remove-btn {
+    margin-top: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.cart-total {
+    text-align: right;
+    font-size: 22px;
 }
