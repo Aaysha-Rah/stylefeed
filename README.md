@@ -2,8 +2,8 @@
 
 StyleFeed is an Instagram-style clothing store web app. Customers browse clothing in an image feed, view product details, choose a size and color, and add items to a shopping cart that shows the total price.
 
-**Author:** Aaysha Rahmath
-**Course:** CS 319, Sprint 1
+**Author:** Aaysha Rahmath Shamsus Zackey
+**Course:** CS 319, Sprint 2
 
 ## Technologies
 - HTML, CSS, and JavaScript (no frameworks)
@@ -11,7 +11,8 @@ StyleFeed is an Instagram-style clothing store web app. Customers browse clothin
 
 ## Prerequisites
 - A modern web browser (Chrome, Safari, Firefox, or Edge)
-- No installation, build step, or server is required
+- No installation, build step, or server is required to use the app
+- To run the automated tests: [Node.js](https://nodejs.org) version 20 or newer (check with `node --version`). The tests use Node's built-in test runner, so there are no packages to install.
 
 ## Installation
 No dependencies to install. Download or clone the repository:
@@ -20,6 +21,15 @@ No dependencies to install. Download or clone the repository:
 git clone https://github.com/Aaysha-Rah/stylefeed.git
 cd stylefeed
 ```
+
+## Running the automated tests
+From the `stylefeed` folder (the one that contains `package.json`), run:
+
+```
+npm test
+```
+
+(`node --test` does the same thing.) Node finds every `*.test.js` file in the `tests/` folder and prints a summary ending in `# fail 0` when everything passes.
 
 ## Configuration
 None. There are no environment variables, API keys, or settings. Product data is sample data (fictional products) stored in `app.js`, and product photos are in the `images/` folder.
@@ -39,13 +49,18 @@ You should see the StyleFeed header and a feed of 6 clothing products.
 6. **View the cart:** Click **Cart** in the top right. Items show with quantity and price, with the total at the bottom. Click **Remove** to remove an item.
 7. **Persistence:** Refresh the Cart page. Your items and total are still there.
 
+## Trying the Sprint 2 functionality
+1. **Search:** On the home page, type `dress` in the search box. Only the Floral Dress stays in the feed. Search ignores upper/lower case.
+2. **No results:** Type `tuxedo`. The feed empties and shows "No products match your search." Clear the box to see all 6 products again.
+
 To reset the cart, open your browser's developer console and run `localStorage.clear()`, then reload.
 
 ## Where data is stored
 The cart is saved in the browser's localStorage. It stays after refreshing the page or closing and reopening the browser on the same computer. It is not shared between browsers or devices. Product data is not editable in the app. It is defined in `app.js`.
 
 ## Known limitations
-- Search, filtering, and sorting are not implemented yet
+- Search matches product names only (not descriptions or colors)
+- Filtering and sorting are not implemented yet
 - Saved Items and Add/Edit/Delete Product pages are not implemented yet
 - There is no checkout, login, or payment
 - The cart is only stored in one browser on one computer

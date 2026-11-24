@@ -1,0 +1,9 @@
+{
+  "name": "stylefeed",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Instagram-style clothing store web app (CS 319)",
+  "scripts": {
+    "test": "node --test"
+  }
+}
