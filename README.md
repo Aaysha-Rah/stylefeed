@@ -52,6 +52,8 @@ You should see the StyleFeed header and a feed of 6 clothing products.
 ## Trying the Sprint 2 functionality
 1. **Search:** On the home page, type `dress` in the search box. Only the Floral Dress stays in the feed. Search ignores upper/lower case.
 2. **No results:** Type `tuxedo`. The feed empties and shows "No products match your search." Clear the box to see all 6 products again.
+3. **Filter:** Choose **Tops** in the category dropdown. Only the Graphic Tee and Knit Sweater show. Choose **All categories** to undo.
+4. **Sort:** Choose **Price: low to high**. The Graphic Tee ($20) is first and the White Sneakers ($60) are last. Search, filter, and sort work together.
 
 To reset the cart, open your browser's developer console and run `localStorage.clear()`, then reload.
 
@@ -60,7 +62,7 @@ The cart is saved in the browser's localStorage. It stays after refreshing the p
 
 ## Known limitations
 - Search matches product names only (not descriptions or colors)
-- Filtering and sorting are not implemented yet
+- Search, filter, and sort choices reset when you leave the home page
 - Saved Items and Add/Edit/Delete Product pages are not implemented yet
 - There is no checkout, login, or payment
 - The cart is only stored in one browser on one computer
