@@ -17,6 +17,15 @@
     <main class="feed">
         <section class="controls">
             <input id="search" type="search" placeholder="Search clothing..." aria-label="Search clothing">
+            <select id="category" aria-label="Filter by category">
+                <option value="all">All categories</option>
+            </select>
+            <select id="sort" aria-label="Sort products">
+                <option value="featured">Featured</option>
+                <option value="price-low-high">Price: low to high</option>
+                <option value="price-high-low">Price: high to low</option>
+                <option value="name-a-z">Name: A to Z</option>
+            </select>
         </section>
         <p id="feed-message" class="feed-message"></p>
         <div id="feed"></div>

@@ -29,15 +29,30 @@ function showFeed() {
     if (!feed) return;
 
     const search = document.getElementById("search");
+    const category = document.getElementById("category");
+    const sort = document.getElementById("sort");
     const message = document.getElementById("feed-message");
 
+    getCategories(products).forEach(function (name) {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        category.appendChild(option);
+    });
+
     function update() {
-        const results = searchProducts(products, search.value);
+        const results = applyFeedOptions(products, {
+            query: search.value,
+            category: category.value,
+            sort: sort.value
+        });
         renderFeed(feed, results);
         message.textContent = results.length === 0 ? "No products match your search." : "";
     }
 
     search.addEventListener("input", update);
+    category.addEventListener("change", update);
+    sort.addEventListener("change", update);
     update();
 }
 
