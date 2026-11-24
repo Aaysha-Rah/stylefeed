@@ -54,16 +54,30 @@ You should see the StyleFeed header and a feed of 6 clothing products.
 2. **No results:** Type `tuxedo`. The feed empties and shows "No products match your search." Clear the box to see all 6 products again.
 3. **Filter:** Choose **Tops** in the category dropdown. Only the Graphic Tee and Knit Sweater show. Choose **All categories** to undo.
 4. **Sort:** Choose **Price: low to high**. The Graphic Tee ($20) is first and the White Sneakers ($60) are last. Search, filter, and sort work together.
+5. **Save for later:** Open any product and click **Save for later**. The button changes to **Saved**. Click it again to unsave.
+6. **Saved Items page:** Click **Saved** in the top right. Saved products show with image, name, and price. Click a product to open it, or **Remove** to take it off the list. With nothing saved, the page says "You have no saved items yet."
+7. **Persistence:** Refresh the Saved page. Your saved items are still there.
 
-To reset the cart, open your browser's developer console and run `localStorage.clear()`, then reload.
+To reset the cart and saved items, open your browser's developer console and run `localStorage.clear()`, then reload.
+
+## Project structure
+| File | What it does |
+|---|---|
+| `index.html`, `product.html`, `cart.html`, `saved.html` | The four pages |
+| `products.js` | Sample product data |
+| `catalog.js` | Search, category filter, and sort logic |
+| `cart.js` | Cart rules (validation, stock limit, totals) and cart storage |
+| `saved.js` | Saved-items list and its storage |
+| `app.js` | Page code only: reads inputs, shows results, wires buttons |
+| `tests/` | Automated tests (`*.test.js`) and a fake storage used by them |
 
 ## Where data is stored
-The cart is saved in the browser's localStorage. It stays after refreshing the page or closing and reopening the browser on the same computer. It is not shared between browsers or devices. Product data is not editable in the app. It is defined in `app.js`.
+The cart and saved items are saved in the browser's localStorage. It stays after refreshing the page or closing and reopening the browser on the same computer. It is not shared between browsers or devices. Product data is not editable in the app. It is defined in `app.js`.
 
 ## Known limitations
 - Search matches product names only (not descriptions or colors)
 - Search, filter, and sort choices reset when you leave the home page
-- Saved Items and Add/Edit/Delete Product pages are not implemented yet
+- Add/Edit/Delete Product pages are not implemented yet
+- Saved items and the cart are only stored in one browser on one computer
 - There is no checkout, login, or payment
-- The cart is only stored in one browser on one computer
 - Stock is not reduced after items are added to the cart (it only limits how many can be added)
